@@ -21,7 +21,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Face Detection-and-Recognition with FAISS")
 
     parser.add_argument("--det-weight", type=str, default="./weights/det_10g.onnx", help="Path to detection model")
-    parser.add_argument("--rec-weight", type=str, default="./weights/w600k_mbf.onnx", help="Path to recognition model")
+    parser.add_argument("--rec-weight", type=str, default="./weights/w600k_r50.onnx", help="Path to recognition model")
     parser.add_argument("--similarity-thresh", type=float, default=0.4, help="Similarity threshold between faces")
     parser.add_argument("--confidence-thresh", type=float, default=0.5, help="Confidence threshold for face detection")
     parser.add_argument("--faces-dir", type=str, default="./assets/faces", help="Path to faces stored dir")
