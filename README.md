@@ -1,40 +1,41 @@
-# Real-Time Face Re-Identification with FAISS, ArcFace & SCRFD
+# AI Face Re-Identification System with FAISS, ArcFace & SCRFD
 
-![Downloads](https://img.shields.io/github/downloads/yakhyo/face-reidentification/total)
-[![GitHub Repo stars](https://img.shields.io/github/stars/yakhyo/face-reidentification)](https://github.com/yakhyo/face-reidentification/stargazers)
-[![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/yakhyo/face-reidentification)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/alifarman007/ai_face_reidentification)
 
-<!--
-<h5 align="center"> If you like our project, please give us a star ⭐ on GitHub for the latest updates.</h5>
--->
+<h5 align="center"> If you like our project, please give star ⭐ on GitHub for the latest updates.</h5>
 
-<video controls autoplay loop src="https://github.com/yakhyo/face-reidentification/assets/28424328/441880b0-1e43-4c28-9f63-b32bc9b6e6b4" muted="false" width="100%"></video>
-
-This repository implements face re-identification using SCRFD for face detection and ArcFace for face recognition. It supports inference from webcam or video sources.
+This repository implements a comprehensive face re-identification system using SCRFD for face detection and ArcFace for face recognition. It supports multiple interfaces including command-line, Gradio web interface, and supports inference from webcam or video sources with FAISS vector database integration.
 
 ## Features
 
-- [x] FAISS Vector Database Integration: Enables fast and scalable face re-identification using a FAISS index built from facial embeddings. Faces must be placed in the `assets/faces/` directory.
-- [x] Smaller versions of SCFRD face detection model has been added
+- [x] **FAISS Vector Database Integration**: Enables fast and scalable face re-identification using a FAISS index built from facial embeddings. Faces must be placed in the `assets/faces/` directory.
+- [x] **Multiple Interface Options**: 
+  - Command-line interface for batch processing
+  - **Gradio Web Interface** for easy interaction and testing
+  - Real-time webcam and video processing
+- [x] **Optimized Models**: Smaller versions of SCRFD face detection models for different performance requirements
 - [x] **Face Detection**: Utilizes [Sample and Computation Redistribution for Efficient Face Detection](https://arxiv.org/abs/2105.04714) (SCRFD) for efficient and accurate face detection.
-  - Added models: SCRFD 500M (2.41 MB), SCRFD 2.5G (3.14 MB)
+  - Available models: SCRFD 500M (2.41 MB), SCRFD 2.5G (3.14 MB), SCRFD 10G (16.1 MB)
 - [x] **Face Recognition**: Employs [ArcFace: Additive Angular Margin Loss for Deep Face Recognition](https://arxiv.org/abs/1801.07698) for robust face recognition.
-  - Added models: ArcFace MobileFace (12.99 MB)
-- [x] **Real-Time Inference**: Supports both webcam and video file input for real-time processing.
+  - Available models: ArcFace MobileFace (12.99 MB), ArcFace ResNet-50 (166 MB)
+- [x] **Real-Time Processing**: Supports both webcam and video file input for real-time processing.
+- [x] **Person Management**: Add, update, and manage known faces through the web interface.
+- [x] **Configuration Management**: Environment-based configuration with `.env` support.
 
 Project folder structure:
 
 ```
 ├── assets/
 │   ├── demo.mp4
-│   |── in_video.mp4
-|   └── faces/
-│     ├── face1.jpg
-│     ├── face2.jpg
-│     └── ...
+│   ├── in_video.mp4
+│   └── faces/
+│       ├── Binoy.jpg
+│       ├── Sadhon.jpg
+│       ├── Tokon.jpg
+│       └── ... (your face images)
 ├── database/
-|   ├── __init__.py
-|   └── face_db.py
+│   ├── __init__.py
+│   └── face_db.py
 ├── models/
 │   ├── __init__.py
 │   ├── scrfd.py
@@ -46,11 +47,14 @@ Project folder structure:
 │   ├── w600k_r50.onnx
 │   └── w600k_mbf.onnx
 ├── utils/
-|   ├── logging.py
+│   ├── logging.py
 │   └── helpers.py
 ├── main.py
-├── README.md
-└── requirements.txt
+├── gradio_interface.py
+├── .env.example
+├── requirements.txt
+├── requirements_web.txt
+└── README.md
 ```
 
 ## Installation
@@ -58,17 +62,30 @@ Project folder structure:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yakyo/face-reidentification.git
-cd face-reidentification
+git clone https://github.com/alifarman007/ai_face_reidentification.git
+cd ai_face_reidentification
 ```
 
 2. Install the required dependencies:
 
+For basic functionality:
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Download weight files:
+For web interface and additional features:
+```bash
+pip install -r requirements_web.txt
+```
+
+3. Configure environment variables (optional):
+
+```bash
+cp .env.example .env
+# Edit .env file with your preferred settings
+```
+
+4. Download weight files:
 
    a) Download weights from following links:
 
@@ -86,21 +103,46 @@ pip install -r requirements.txt
    sh download.sh
    ```
 
-4. Put target faces into `assets/faces` folder
+5. Put target faces into `assets/faces` folder
 
 ```
-faces/
-    ├── name1.jpg
-    ├── name2.jpg
+assets/faces/
+    ├── Binoy.jpg
+    ├── Sadhon.jpg
+    ├── Tokon.jpg
+    └── ... (your face images)
 ```
 
-Those file names will be displayed while real-time inference.
+The file names (without extension) will be used as person identifiers during real-time inference.
 
 ## Usage
 
+### 1. Command Line Interface
+
+For video file processing:
 ```bash
 python main.py --source assets/in_video.mp4
 ```
+
+For webcam processing:
+```bash
+python main.py --source 0
+```
+
+### 2. Gradio Web Interface
+
+Launch the interactive web interface:
+```bash
+python gradio_interface.py
+```
+
+Then open your browser and navigate to the provided URL (typically `http://localhost:7860`).
+
+The web interface allows you to:
+- Add new persons by uploading their photos
+- Update the face database
+- Process video files or use webcam in real-time
+- Manage face recognition settings
 
 `main.py` arguments:
 
@@ -126,7 +168,40 @@ options:
   --max-num MAX_NUM     Maximum number of face detections from a frame
 ```
 
-## Reference
+## Configuration
 
-1. https://github.com/deepinsight/insightface/tree/master/detection/scrfd
-2. https://github.com/deepinsight/insightface/tree/master/recognition/arcface_torch
+The system can be configured through environment variables or the `.env` file:
+
+```bash
+# Model Configuration
+DET_WEIGHT_PATH=./weights/det_10g.onnx
+REC_WEIGHT_PATH=./weights/w600k_r50.onnx
+
+# Thresholds
+SIMILARITY_THRESHOLD=0.4
+CONFIDENCE_THRESHOLD=0.5
+
+# Directories
+FACES_DIR=./assets/faces
+DATABASE_PATH=./database/face_database
+```
+
+## Interface Options
+
+The system provides multiple ways to interact with the face recognition system:
+
+1. **Command Line Interface**: Traditional CLI for batch processing and automation
+2. **Gradio Web Interface**: User-friendly web interface for interactive use
+3. **Real-time Processing**: Both webcam and video file processing support
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
