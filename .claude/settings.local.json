@@ -3,7 +3,30 @@
     "allow": [
       "Bash(pip install:*)",
       "mcp__github__create_repository",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git config:*)",
+      "Bash(git remote add:*)",
+      "Bash(git remote set-url:*)",
+      "Bash(git push:*)",
+      "Bash(mkdir:*)",
+      "Bash(cp:*)",
+      "Bash(python:*)",
+      "Bash(taskkill:*)",
+      "Bash(set API_PORT=8080)",
+      "Bash(curl:*)",
+      "Bash(pkill:*)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_take_screenshot",
+      "Bash(kill:*)",
+      "mcp__playwright__browser_wait_for",
+      "mcp__playwright__browser_press_key",
+      "mcp__playwright__browser_evaluate",
+      "mcp__playwright__browser_close",
+      "Bash(ls:*)",
+      "Bash(touch:*)",
+      "mcp__playwright__browser_click",
+      "Bash(rm:*)"
     ],
     "deny": []
   }

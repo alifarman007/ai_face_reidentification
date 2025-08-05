@@ -1,3 +1,4 @@
+# Core ML/AI dependencies
 onnx
 onnxruntime
 onnxruntime-gpu
@@ -5,5 +6,26 @@ opencv-python
 numpy
 scikit-image
 faiss-cpu
-tkinter
 pillow
+
+# GUI dependencies
+tkinter
+
+# Web API dependencies
+fastapi>=0.104.1
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+
+# Database dependencies
+psycopg2-binary>=2.9.7
+sqlalchemy>=2.0.23
+alembic>=1.12.1
+
+# Additional utilities
+aiofiles>=23.2.1
+python-dotenv>=1.0.0
+pydantic>=2.5.0
+httpx>=0.25.2
+gradio
