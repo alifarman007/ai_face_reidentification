@@ -1,0 +1,22 @@
+# FastAPI and web server dependencies
+fastapi>=0.104.1
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+
+# Image processing
+Pillow>=10.1.0
+opencv-python>=4.8.1.78
+
+# Scientific computing (should match main project)
+numpy>=1.24.3
+
+# Async support
+aiofiles>=23.2.1
+
+# Logging and utilities
+python-dotenv>=1.0.0
+pydantic>=2.5.0
+
+# Note: The main project dependencies (FAISS, ONNX models, etc.) 
+# are imported from the parent directory, so they should already be installed
+# in the main project environment.
